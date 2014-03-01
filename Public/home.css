@@ -15,3 +15,12 @@ ul{
 .block {
   color: orange;
 }
+
+
+#second {
+  float: left;
+}
+
+#third{
+  float: right;
+}

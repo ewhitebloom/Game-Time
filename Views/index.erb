@@ -7,7 +7,7 @@
 <body>
 
 
-<div class="block">
+<div class="block" id="first">
 <h1>Team Stats</h1>
 <% @teams.each do |team| %>
 <ul>
@@ -16,7 +16,7 @@
 <% end %>
 </div>
 
-<div class="block">
+<div class="block" id="second">
 <h1>Winners Board</h1>
 <% @win.each do |team| %>
 <ul>
@@ -25,7 +25,7 @@
 <% end %>
 </div>
 
-<div class="block">
+<div class="block" id="third">
 <h1>Losers Board</h1>
 <% @lose.each do |team| %>
 <ul>
