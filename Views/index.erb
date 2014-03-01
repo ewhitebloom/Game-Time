@@ -9,6 +9,16 @@
 </head>
 <body>
 <div id="wrapper">
+
+<h1>Team Stats</h1>
+<% @teams.each do |team| %>
+<ul>
+ <li><%= team[:name].to_s + ": " + "Wins: " + team[:wins].to_s + "," + " Losses: " + team[:losses].to_s %></li>
+</ul>
+<% end %>
+
+
+
 <h1>Winners-Board</h1>
 <% @win.each do |team| %>
 <ul>
