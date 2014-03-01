@@ -1,38 +1,38 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
   <title>Game-Time Stats</title>
   <link rel="stylesheet" href="home.css">
 </head>
-<html lang="en">
-<head>
-  <title><%@path_formatted%></title>
-</head>
 <body>
-<div id="wrapper">
 
+
+<div class="block">
 <h1>Team Stats</h1>
 <% @teams.each do |team| %>
 <ul>
  <li><%= team[:name].to_s + ": " + "Wins: " + team[:wins].to_s + "," + " Losses: " + team[:losses].to_s %></li>
 </ul>
 <% end %>
+</div>
 
-
-
-<h1>Winners-Board</h1>
+<div class="block">
+<h1>Winners Board</h1>
 <% @win.each do |team| %>
 <ul>
  <li><%= team[:name].to_s + ": " + team[:wins].to_s %></li>
 </ul>
 <% end %>
+</div>
 
-<h1>Losers-Board</h1>
+<div class="block">
+<h1>Losers Board</h1>
 <% @lose.each do |team| %>
 <ul>
  <li><%= team[:name].to_s + ": " + team[:losses].to_s %></li>
 </ul>
 <% end %>
+</div>
 
-</wrapper>
 </body>
 </html>

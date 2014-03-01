@@ -1,0 +1,17 @@
+body {
+  background-image: url('football-background.gif');
+  text-align: center;
+  font-family: 'verdana';
+}
+
+h1{
+  color: white;
+}
+
+ul{
+  list-style: none;
+}
+
+.block {
+  color: orange;
+}
