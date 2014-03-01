@@ -54,7 +54,17 @@ away_score: 21
  end
 
 
+ def win_board(data)
+   wins = data.sort_by{ |team| team[:wins] }.reverse
+ end
 
+def lose_board(data)
+   wins = data.sort_by{ |team| team[:losses] }.reverse
+ end
+
+win = win_board(@teams)
+lose = lose_board(@teams)
+binding.pry
 
 
 
