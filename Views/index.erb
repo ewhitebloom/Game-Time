@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<head>
+  <title>Game-Time Stats</title>
+  <link rel="stylesheet" href="home.css">
+</head>
+<html lang="en">
+<head>
+  <title><%@path_formatted%></title>
+</head>
+<body>
+<div id="wrapper">
+<h1>Winners-Board</h1>
+<% @win.each do |team| %>
+<ul>
+ <li><%= team[:name].to_s + ": " + team[:wins].to_s %></li>
+</ul>
+<% end %>
+
+<h1>Losers-Board</h1>
+<% @lose.each do |team| %>
+<ul>
+ <li><%= team[:name].to_s + ": " + team[:losses].to_s %></li>
+</ul>
+<% end %>
+
+</wrapper>
+</body>
+</html>
