@@ -1,8 +1,4 @@
 require 'sinatra'
-require 'shotgun'
-
-set :views, File.dirname(__FILE__) + '/views'
-set :public_folder, File.dirname(__FILE__) + '/public'
 
 get '/leaderboard' do
   @data = [
