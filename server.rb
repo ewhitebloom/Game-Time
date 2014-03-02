@@ -6,12 +6,13 @@ end
 
 def find_or_create_team(teams, team_name)
   team = find_team(teams, team_name)
+  team = create_team(teams, team_name) if team.nil?
+  team
+end
 
-  if team.nil?
-    team = { name: team_name, wins: 0, losses: 0 }
-    teams << team
-  end
-
+def create_team(teams, team_name)
+  team = { name: team_name, wins: 0, losses: 0 }
+  teams << team
   team
 end
 
