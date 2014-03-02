@@ -4,6 +4,17 @@ def find_team(teams, team_name)
   teams.find { |team| team[:name] == team_name }
 end
 
+def find_or_create_team(teams, team_name)
+  team = find_team(teams, team_name)
+
+  if team.nil?
+    team = { name: team_name, wins: 0, losses: 0 }
+    teams << team
+  end
+
+  team
+end
+
 get '/leaderboard' do
   @data = [
     {
@@ -35,20 +46,12 @@ get '/leaderboard' do
   @teams = []
 
   @data.each do |game|
-    game.select { |key,value|
-      if (key == :home_team || key ==:away_team)
-        unless find_team(@teams, value)
-          @teams << { name: value, wins: 0, losses: 0 }
-        end
-      end
-    }
-
     if game[:home_score] > game[:away_score]
-      winner = find_team(@teams, game[:home_team])
-      loser = find_team(@teams, game[:away_team])
+      winner = find_or_create_team(@teams, game[:home_team])
+      loser = find_or_create_team(@teams, game[:away_team])
     elsif  game[:home_score] < game[:away_score]
-      winner = find_team(@teams, game[:away_team])
-      loser = find_team(@teams, game[:home_team])
+      winner = find_or_create_team(@teams, game[:away_team])
+      loser = find_or_create_team(@teams, game[:home_team])
     end
 
     winner[:wins] +=  1
