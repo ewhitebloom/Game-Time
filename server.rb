@@ -38,8 +38,7 @@ get '/leaderboard' do
   @data.each do |game|
     game.select { |key,value|
      if (key == :home_team || key ==:away_team)
-      @flatten  = @teams.map(&:values).flatten
-      unless @flatten.include?(value)
+      unless @teams.find{ |team| team[:name] == value }
         @teams << { name: value, wins: 0, losses: 0 }
       end
      end
