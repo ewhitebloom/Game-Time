@@ -44,7 +44,7 @@ get '/leaderboard' do
      end
     }
     if  game[:home_score] > game[:away_score]
-      win_index = @teams.index{ |team| team[:name] == game[:home_team] }
+     win_index = @teams.index{ |team| team[:name] == game[:home_team] }
      lose_index = @teams.index{ |team| team[:name] == game[:away_team] }
     elsif  game[:home_score] < game[:away_score]
      lose_index = @teams.index{ |team| team[:name] == game[:home_team] }
@@ -52,7 +52,7 @@ get '/leaderboard' do
     end
      @teams[win_index][:wins] +=  1
      @teams[lose_index][:losses] +=  1
- end
+  end
 
    @win = @teams.sort_by{ |team| team[:wins] }.reverse
    @lose = @teams.sort_by{ |team| team[:losses] }.reverse
