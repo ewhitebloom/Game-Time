@@ -16,6 +16,19 @@ def create_team(teams, team_name)
   team
 end
 
+def update_stats(game, teams)
+  if game[:home_score] > game[:away_score]
+    winner = find_or_create_team(teams, game[:home_team])
+    loser = find_or_create_team(teams, game[:away_team])
+  elsif game[:home_score] < game[:away_score]
+    winner = find_or_create_team(teams, game[:away_team])
+    loser = find_or_create_team(teams, game[:home_team])
+  end
+
+  winner[:wins] +=  1
+  loser[:losses] +=  1
+end
+
 get '/leaderboard' do
   @data = [
     {
@@ -47,16 +60,7 @@ get '/leaderboard' do
   @teams = []
 
   @data.each do |game|
-    if game[:home_score] > game[:away_score]
-      winner = find_or_create_team(@teams, game[:home_team])
-      loser = find_or_create_team(@teams, game[:away_team])
-    elsif  game[:home_score] < game[:away_score]
-      winner = find_or_create_team(@teams, game[:away_team])
-      loser = find_or_create_team(@teams, game[:home_team])
-    end
-
-    winner[:wins] +=  1
-    loser[:losses] +=  1
+    update_stats(game, @teams)
   end
 
   @win = @teams.sort_by{ |team| team[:wins] }.reverse
