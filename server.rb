@@ -35,11 +35,6 @@ get '/leaderboard' do
 
   @teams = []
 
-  def scoring(win_index, lose_index)
-     @teams[win_index][:wins] +=  1
-     @teams[lose_index][:losses] +=  1
-  end
-
   @data.each do |game|
     game.select { |key,value|
      if (key == :home_team || key ==:away_team)
@@ -56,7 +51,8 @@ get '/leaderboard' do
      lose_index = @teams.index{ |team| team[:name] == game[:home_team] }
      win_index = @teams.index{ |team| team[:name] == game[:away_team] }
     end
-     scoring(win_index, lose_index)
+     @teams[win_index][:wins] +=  1
+     @teams[lose_index][:losses] +=  1
  end
 
    @win = @teams.sort_by{ |team| team[:wins] }.reverse
