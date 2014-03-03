@@ -29,6 +29,10 @@ def update_stats(game, teams)
   loser[:losses] +=  1
 end
 
+get '/' do
+  redirect '/leaderboard'
+end
+
 get '/leaderboard' do
   @data = [
     {
@@ -68,5 +72,5 @@ get '/leaderboard' do
   @winners = @teams.sort_by{ |team| team[:wins] }.reverse
   @losers = @teams.sort_by{ |team| team[:losses] }.reverse
 
-  erb :index
+  erb :leaderboard
 end
