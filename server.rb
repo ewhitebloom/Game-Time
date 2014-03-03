@@ -63,8 +63,10 @@ get '/leaderboard' do
     update_stats(game, @teams)
   end
 
-  @win = @teams.sort_by{ |team| team[:wins] }.reverse
-  @lose = @teams.sort_by{ |team| team[:losses] }.reverse
+  @teams.sort_by! { |team| [-team[:wins], team[:losses]] }
+
+  @winners = @teams.sort_by{ |team| team[:wins] }.reverse
+  @losers = @teams.sort_by{ |team| team[:losses] }.reverse
 
   erb :index
 end
