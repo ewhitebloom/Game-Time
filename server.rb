@@ -1,62 +1,76 @@
 require 'sinatra'
-require 'shotgun'
 
-set :views, File.dirname(__FILE__) + '/views'
-set :public_folder, File.dirname(__FILE__) + '/public'
+def find_team(teams, team_name)
+  teams.find { |team| team[:name] == team_name }
+end
+
+def find_or_create_team(teams, team_name)
+  team = find_team(teams, team_name)
+  team = create_team(teams, team_name) if team.nil?
+  team
+end
+
+def create_team(teams, team_name)
+  team = { name: team_name, wins: 0, losses: 0 }
+  teams << team
+  team
+end
+
+def update_stats(game, teams)
+  if game[:home_score] > game[:away_score]
+    winner = find_or_create_team(teams, game[:home_team])
+    loser = find_or_create_team(teams, game[:away_team])
+  elsif game[:home_score] < game[:away_score]
+    winner = find_or_create_team(teams, game[:away_team])
+    loser = find_or_create_team(teams, game[:home_team])
+  end
+
+  winner[:wins] +=  1
+  loser[:losses] +=  1
+end
+
+get '/' do
+  redirect '/leaderboard'
+end
 
 get '/leaderboard' do
-
-    @data = [
+  @data = [
     {
-    home_team: "Patriots",
-    away_team: "Broncos",
-    home_score: 7,
-    away_score: 3
+      home_team: "Patriots",
+      away_team: "Broncos",
+      home_score: 7,
+      away_score: 3
     },
     {
-    home_team: "Broncos",
-    away_team: "Colts",
-    home_score: 3,
-    away_score: 0
+      home_team: "Broncos",
+      away_team: "Colts",
+      home_score: 3,
+      away_score: 0
     },
     {
-    home_team: "Patriots",
-    away_team: "Colts",
-    home_score: 11,
-    away_score: 7
+      home_team: "Patriots",
+      away_team: "Colts",
+      home_score: 11,
+      away_score: 7
     },
     {
-    home_team: "Steelers",
-    away_team: "Patriots",
-    home_score: 7,
-    away_score: 21
+      home_team: "Steelers",
+      away_team: "Patriots",
+      home_score: 7,
+      away_score: 21
     }
-    ]
+  ]
 
   @teams = []
 
   @data.each do |game|
-    game.select { |key,value|
-     if (key == :home_team || key ==:away_team)
-      unless @teams.find{ |team| team[:name] == value }
-        @teams << { name: value, wins: 0, losses: 0 }
-      end
-     end
-    }
-    if  game[:home_score] > game[:away_score]
-     win_index = @teams.index{ |team| team[:name] == game[:home_team] }
-     lose_index = @teams.index{ |team| team[:name] == game[:away_team] }
-    elsif  game[:home_score] < game[:away_score]
-     lose_index = @teams.index{ |team| team[:name] == game[:home_team] }
-     win_index = @teams.index{ |team| team[:name] == game[:away_team] }
-    end
-     @teams[win_index][:wins] +=  1
-     @teams[lose_index][:losses] +=  1
+    update_stats(game, @teams)
   end
 
-   @win = @teams.sort_by{ |team| team[:wins] }.reverse
-   @lose = @teams.sort_by{ |team| team[:losses] }.reverse
+  @teams.sort_by! { |team| [-team[:wins], team[:losses]] }
 
- erb :index
+  @winners = @teams.sort_by{ |team| team[:wins] }.reverse
+  @losers = @teams.sort_by{ |team| team[:losses] }.reverse
 
+  erb :leaderboard
 end
