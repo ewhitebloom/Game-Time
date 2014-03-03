@@ -57,6 +57,6 @@ get '/leaderboard' do
    @win = @teams.sort_by{ |team| team[:wins] }.reverse
    @lose = @teams.sort_by{ |team| team[:losses] }.reverse
 
- erb :index
+ haml :index
 
 end

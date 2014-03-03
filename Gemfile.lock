@@ -1,6 +1,8 @@
 GEM
   specs:
     coderay (1.1.0)
+    haml (4.0.5)
+      tilt
     method_source (0.8.2)
     pry (0.9.12.6)
       coderay (~> 1.0)
@@ -22,6 +24,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  haml
   pry
   shotgun
   sinatra

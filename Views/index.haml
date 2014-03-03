@@ -1,0 +1,24 @@
+!!!
+%html
+  %head
+    %title = Game-Time Stats
+    %link{:rel => :stylesheet, :type => :"text/css", :href => "home.css"}
+  %body
+    #first
+      .block
+        %h1 Team Stats
+      - @teams.each do |team|
+        %ul
+          %li= team[:name].to_s + ": " + "Wins: " + team[:wins].to_s + "," + " Losses: " + team[:losses].to_s
+    #second
+      .block
+        %h1 Winners Board
+      - @win.each do |team|
+        %ul
+          %li= team[:name].to_s + ": " + team[:wins].to_s
+    #third
+      .block
+        %h1 Losers Board
+      - @lose.each do |team|
+        %ul
+          %li= team[:name].to_s + ": " + team[:losses].to_s
