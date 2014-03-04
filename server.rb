@@ -1,5 +1,9 @@
 require 'sinatra'
 
+get '/' do
+ redirect '/leaderboard'
+end
+
 get '/leaderboard' do
 
     @data = [
